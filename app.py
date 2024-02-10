@@ -85,7 +85,7 @@ def clean_directory():
             shutil.rmtree(item_path)
 
 def upscale_image():
-    command = ["python3", "HAT/test.py", "-opt", "Upscaler/options/test/HAT_GAN_Real_SRx4.yml"]
+    command = ["python3", "Upscaler/test.py", "-opt", "Upscaler/options/test/HAT_GAN_Real_SRx4.yml"]
     result = subprocess.run(command, capture_output=True, text=True)
     print("stdout:", result.stdout)
     print("stderr:", result.stderr)
@@ -120,7 +120,15 @@ def cleanup_video():
     delete_png_files("./temp/image_sequence/")
     delete_png_files("./test_video/")
     shutil.rmtree("./experiments_train")         
-        
+    
+def cleanup_image():
+    delete_png_files("./dataset/test/hr_256/")
+    delete_png_files("./dataset/test/sr_16_256/")
+    delete_png_files("./temp/enhance_video/")
+    delete_png_files("./temp/image_sequence/")
+    delete_png_files("./test_video/")
+    shutil.rmtree("./experiments_train")         
+             
 with st.sidebar:
     selected = option_menu("Main Menu", ["Image", 'Video'], 
         icons=['house', 'gear'], menu_icon="cast", default_index=1)
@@ -147,7 +155,6 @@ if selected == "Image":
         img.save('./dataset/test/sr_16_256/00001.png')
 
     if st.button('Execute'):
-        st.button
         progress_bar = st.progress(30, text=progress_text)
 
         model = DiffusionModel(image_name = uploaded_file.name)
@@ -165,6 +172,7 @@ if selected == "Image":
         image_name = f'{name}_HAT_GAN_Real_SRx4.png'
         image_path = f'./results/HAT_GAN_Real_SRx4/visualization/custom/{image_name}'
         progress_bar.empty()
+        cleanup_image()
         st.image(image_path, caption='Sunrise by the mountains')
         
         
@@ -172,6 +180,8 @@ if selected == "Image":
 
 
 if selected == "Video":
+    progress_text = "Operation in progress. Please wait."
+
     st.title('Video Processing App')
 
     if st.button("Convert Images to Video"):
@@ -203,3 +213,4 @@ if selected == "Video":
         progress_bar.progress(100, text=progress_text)
  
         st.success("Video created successfully!")
+        progress_bar.empty()
