@@ -1,0 +1,26 @@
+[tool.poetry]
+name = "undewater-image-enhancement"
+version = "0.1.0"
+description = ""
+authors = ["Matt LeGro <esmbaseball@gmail.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+torch = ">=1.6"
+torchvision = "^0.17.1"
+numpy = "^1.26.4"
+pandas = "^2.2.1"
+tqdm = "^4.66.2"
+lmdb = "^1.4.1"
+opencv-python = "^4.9.0.80"
+pillow = "^10.2.0"
+tensorboardx = "^2.6.2.2"
+wandb = "^0.16.5"
+cog = "^0.9.5"
+ipykernel = "^6.29.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
